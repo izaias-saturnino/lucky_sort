@@ -31,6 +31,7 @@ def extract_sorted(numbers, verbose=False):
 
     min_number = min(numbers)
     max_number = max(numbers)
+    average_number = mean(numbers)
 
     numbers_len = len(numbers)
 
@@ -44,7 +45,11 @@ def extract_sorted(numbers, verbose=False):
         el = numbers[i]
         if el >= last_inserted_element or last_inserted_element == -float("inf"):
             number_percentage = (i+0.5)/numbers_len
-            expected_number = (max_number - min_number) * number_percentage + min_number
+            expected_number = 0
+            if i <= numbers_len/2:
+                expected_number = (average_number - min_number) * number_percentage * 2 + min_number
+            else:
+                expected_number = (max_number - average_number) * (number_percentage-0.5) * 2 + average_number
             if el <= round(expected_number):
                 already_sorted.append(el)
                 last_inserted_element = el
